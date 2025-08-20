@@ -15,7 +15,7 @@ export class PokemonController {
   }
 
   @Get(':id')
-  getById(@Param('id') id: string) {
+  getById(@Param('id') id: number) {
     return this.service.getById(id);
   }
 
@@ -30,12 +30,12 @@ export class PokemonController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdatePokemonDto) {
+  update(@Param('id') id: number, @Body() dto: UpdatePokemonDto) {
     return this.service.update(id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.service.remove(id);
   }
 }

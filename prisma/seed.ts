@@ -13,10 +13,10 @@ async function main() {
   if (Array.isArray(dataArray)) {
     for (const data of dataArray) {
     await prisma.pokemon.upsert({
-      where: { id: data.id.toString() },
+      where: { id: data.id },
       update: {},
       create: {
-        id: data.id.toString(),
+        id: data.id,
         name: data.name,
         type: data.type.join(','),
         height: data.height,

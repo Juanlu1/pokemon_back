@@ -9,7 +9,7 @@ export class PokemonService {
   constructor(private readonly prisma: PrismaService) {}
 
   async list(q: QueryPokemonDto) {
-    const { page = 1, pageSize = 20, search, type, orderBy = 'id', orderDir = 'desc' } = q;
+    const { page = 1, pageSize = 20, search, type, orderBy = 'id', orderDir = 'asc' } = q;
     const where: any = {
       AND: [
         type ? { type: { equals: type, mode: 'insensitive' } } : {},
@@ -33,7 +33,7 @@ export class PokemonService {
     return { total, page, pageSize, data };
   }
 
-  async getById(id: string) {
+  async getById(id: number) {
     const pokemon = await this.prisma.pokemon.findUnique({ where: { id } });
     if (!pokemon) throw new NotFoundException('Pokemon not found');
     return pokemon;
@@ -51,12 +51,12 @@ export class PokemonService {
     return this.prisma.pokemon.create({ data: dto as any });
   }
 
-  async update(id: string, dto: UpdatePokemonDto) {
+  async update(id: number, dto: UpdatePokemonDto) {
     await this.getById(id);
     return this.prisma.pokemon.update({ where: { id }, data: dto as any });
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     await this.getById(id);
     await this.prisma.pokemon.delete({ where: { id } });
     return { ok: true };
