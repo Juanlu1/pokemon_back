@@ -9,19 +9,14 @@ export class PokemonService {
   constructor(private readonly prisma: PrismaService) {}
 
   async list(q: QueryPokemonDto) {
-    const { page = 1, pageSize = 21, search, type, orderBy = 'id', orderDir = 'asc' } = q;
-    const where: any = {
-      AND: [
-        type ? { type: { equals: type, mode: 'insensitive' } } : {},
-        search ? {
+    const { page = 1, pageSize = 21, search, orderBy = 'id', orderDir = 'asc' } = q;
+    const where: any = search ? {
           OR: [
             ...(!isNaN(Number(search)) ? [{ id: Number(search) }] : []),
             { name: { contains: search, mode: 'insensitive' } },
             { type: { contains: search, mode: 'insensitive' } },
           ],
-        } : {},
-      ],
-    };
+        } : {};
     const [total, data] = await this.prisma.$transaction([
       this.prisma.pokemon.count({ where }),
       this.prisma.pokemon.findMany({
