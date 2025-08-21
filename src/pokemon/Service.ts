@@ -15,6 +15,7 @@ export class PokemonService {
         type ? { type: { equals: type, mode: 'insensitive' } } : {},
         search ? {
           OR: [
+            ...(!isNaN(Number(search)) ? [{ id: Number(search) }] : []),
             { name: { contains: search, mode: 'insensitive' } },
             { type: { contains: search, mode: 'insensitive' } },
           ],
@@ -40,11 +41,10 @@ export class PokemonService {
   }
 
   create(dto: CreatePokemonDto) {
-  const { id, ...pokemonData } = dto as any;
-  return this.prisma.pokemon.create({ 
-    data: pokemonData 
-  });
-}
+    return this.prisma.pokemon.create({ 
+      data: dto 
+    });
+  }
 
   async update(id: number, dto: UpdatePokemonDto) {
     await this.getById(id);

@@ -19,8 +19,8 @@ async function main() {
         id: data.id,
         name: data.name,
         type: data.type.join(','),
-        height: data.height,
-        weight: data.weight,
+        height: data.height / 10,
+        weight: data.weight / 10,
         imageUrl: data.sprite,
       },
     });
