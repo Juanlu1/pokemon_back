@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const pokedex = new PokeDex();
 
 async function main() {
-  const ids = Array.from({ length: 100 }, (_, i) => i + 1);
+  const ids = Array.from({ length: 1000 }, (_, i) => i + 1);
 
   const dataArray = await pokedex.fetch({ id: ids });
 
