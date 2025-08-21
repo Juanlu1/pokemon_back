@@ -19,11 +19,6 @@ export class PokemonController {
     return this.service.getById(id);
   }
 
-  @Get('byName/:name')
-  getByName(@Param('name') name: string) {
-    return this.service.getByName(name);
-  }
-
   @Post()
   create(@Body() dto: CreatePokemonDto) {
     return this.service.create(dto);

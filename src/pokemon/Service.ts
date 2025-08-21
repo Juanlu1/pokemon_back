@@ -9,7 +9,7 @@ export class PokemonService {
   constructor(private readonly prisma: PrismaService) {}
 
   async list(q: QueryPokemonDto) {
-    const { page = 1, pageSize = 20, search, type, orderBy = 'id', orderDir = 'asc' } = q;
+    const { page = 1, pageSize = 21, search, type, orderBy = 'id', orderDir = 'asc' } = q;
     const where: any = {
       AND: [
         type ? { type: { equals: type, mode: 'insensitive' } } : {},
@@ -39,17 +39,12 @@ export class PokemonService {
     return pokemon;
   }
 
-  async getByName(name: string) {
-    const pokemon = await this.prisma.pokemon.findFirst({
-      where: { name: { equals: name, mode: 'insensitive' } },
-    });
-    if (!pokemon) throw new NotFoundException('Pokemon not found');
-    return pokemon;
-  }
-
   create(dto: CreatePokemonDto) {
-    return this.prisma.pokemon.create({ data: dto as any });
-  }
+  const { id, ...pokemonData } = dto as any;
+  return this.prisma.pokemon.create({ 
+    data: pokemonData 
+  });
+}
 
   async update(id: number, dto: UpdatePokemonDto) {
     await this.getById(id);

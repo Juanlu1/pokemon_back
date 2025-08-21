@@ -101,3 +101,4 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ## npx prisma studio me da la base de datos
 ## npm run start:dev. corre el back
+# npx prisma migrate dev --name fix-id-int   Modifica el id por si esta "roto" y no se toma como int
